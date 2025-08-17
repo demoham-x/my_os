@@ -37,19 +37,22 @@
 #define FB_BLACK            0U
 #define FB_RED              4U
 #define FB_DARK_GREY        8U
-#define FB_Light_RED        12U
+#define FB_LIGHT_RED        12U
 #define FB_BLUE             1U
 #define FB_MAGENTA          5U
 #define FB_LIGHT_BLUE       9U
 #define FB_LIGHT_MAGENTA    13U
 #define FB_GREEN            2U
-#define FB_Brown            6U
+#define FB_BROWN            6U
 #define FB_LIGHT_GREEN      10U
 #define FB_LIGHT_BROWN      14U
 #define FB_CYAN             3U
 #define FB_LIGHT_GREY       7U
 #define FB_LIGHT_CYAN       11U
 #define FB_WHITE            15U
+
+#define DEFAULT_FG_COLOR FB_WHITE
+#define DEFAULT_BG_COLOUR FB_BLACK
 
 /** Frame buffer address */
 #define FB_ADDR 0x000B8000
@@ -122,5 +125,23 @@ void fb_move_cursor(unsigned short pos);
  *  @param data The data to send to the I/O port
  */
 void outb(unsigned short port, unsigned char data);
+
+/**
+ * @name fb_write
+ *
+ * @brief writes a string to the framebuffer
+ *
+ * @note The write function writes the contents
+ * of the buffer buf of length len to the screen.
+ * The write function should automatically advance
+ * the cursor after a character has been written
+ * and scroll the screen if necessary.
+ *
+ * @param buf the string to write
+ * @param len the Length of the string
+ * @param fg the foreground colour
+ * @param bg the background colour
+ */
+void fb_write(char * buf, unsigned int len, unsigned char fg, unsigned char bg);
 
 #endif /* INCLUDE_IO_H */
