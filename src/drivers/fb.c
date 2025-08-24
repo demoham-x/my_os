@@ -1,11 +1,19 @@
 /**
- * @file io.c
+ * @file fb.c
  *
- * @brief Implemnetaion of framebuffer I/O functions
+ * @brief Implementation of framebuffer I/O functions
  */
 
+/******************************************* Includes */
 #include "io.h"
+#include "os_common.h"
+#include "fb.h"
 
+/******************************************* Defines */
+
+/******************************************* Macros */
+
+/******************************************* Functions */
 unsigned int current_row = 5;
 unsigned int current_col = 0;
 
@@ -92,22 +100,6 @@ void clear_line(unsigned int row)
     }
 }
 
-/**
- * @name fb_write
- *
- * @brief writes a string to the framebuffer
- *
- * @note The write function writes the contents
- * of the buffer buf of length len to the screen.
- * The write function should automatically advance
- * the cursor after a character has been written
- * and scroll the screen if necessary.
- *
- * @param buf the string to write
- * @param len the Length of the string
- * @param fg the foreground colour
- * @param bg the background colour
- */
 void fb_write(char * buf, unsigned int len, unsigned char fg, unsigned char bg)
 {
     unsigned int i;

@@ -1,6 +1,13 @@
-#ifndef INCLUDE_IO_H
-#define INCLUDE_IO_H
+/**
+ * @file fb.h
+ *
+ * @brief Header file for framebuffer I/O functions
+ */
+#ifndef INCLUDE_FB_H
+#define INCLUDE_FB_H
+/******************************************* Includes */
 
+/******************************************* Defines */
 /**
  * @name The Framebuffer
  * @par The framebuffer is a block of memory mapped to video hardware.
@@ -20,18 +27,6 @@
 #define FB_HEIGHT 25U
 /** Frame buffer size */
 #define FB_SIZE (FB_WIDTH * FB_HEIGHT * 2U)
-
-/**
- */
-/**
- * @name Macro to pack Foreground and Background
- *
- * @par Frame buffer structure:
- * Bit:     | 15 14 13 12 11 10 9 8 | 7 6 5 4 | 3 2 1 0 |
- * Content: | ASCII                 | FG      | BG      |
-*/
-#define PACK_FG_BG(fg, bg) \
-        ((fg & 0x0FU) << 4U) | (bg & 0x0FU)
 
 /** Frame buffer colours */
 #define FB_BLACK            0U
@@ -65,6 +60,19 @@
 #define FB_HIGH_BYTE_COMMAND    14
 #define FB_LOW_BYTE_COMMAND     15
 
+
+/******************************************* Macros */
+
+/**
+ * @name Macro to pack Foreground and Background
+ *
+ * @par Frame buffer structure:
+ * Bit:     | 15 14 13 12 11 10 9 8 | 7 6 5 4 | 3 2 1 0 |
+ * Content: | ASCII                 | FG      | BG      |
+*/
+#define PACK_FG_BG(fg, bg) \
+        ((fg & 0x0FU) << 4U) | (bg & 0x0FU)
+
 /**
  * @name Cursor pack loaction
  *
@@ -89,6 +97,7 @@
 #define PACK_FRAMEBUF_LOCATION(row, col) \
         (((row * FB_WIDTH) + col) * 2U)
 
+/******************************************* Protoytes */
  /**
   * @name fb_write_cell:
   *
@@ -118,14 +127,6 @@ void fb_write_cell(unsigned int i, char c, unsigned char fg, unsigned char bg);
  */
 void fb_move_cursor(unsigned short pos);
 
-/** outb:
- *  Sends the given data to the given I/O port. Defined in io.s
- *
- *  @param port The I/O port to send the data to
- *  @param data The data to send to the I/O port
- */
-void outb(unsigned short port, unsigned char data);
-
 /**
  * @name fb_write
  *
@@ -144,4 +145,4 @@ void outb(unsigned short port, unsigned char data);
  */
 void fb_write(char * buf, unsigned int len, unsigned char fg, unsigned char bg);
 
-#endif /* INCLUDE_IO_H */
+#endif /* INCLUDE_FB_H */
