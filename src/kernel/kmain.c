@@ -2,11 +2,14 @@
 #include "io.h"
 #include "fb.h"
 #include "serial_port.h"
+#include "gdt.h"
 
 /* Frame buffer write test */
 /*#define TEST_2 */
 /* Serial buffer write test */
 #define TEST_3
+/* GDT test */
+#define TEST_4
 
 /* The C function */
 int sum_of_three(int arg1, int arg2, int arg3)
@@ -38,7 +41,6 @@ void init_serial_com1(void)
 
 int main()
 {
-
 #ifdef TEST_1
     /* Print 'H' at top left (row 0, col 0), white on black */
     fb_write_cell(PACK_FRAMEBUF_LOCATION(0, 0), 'H', FB_WHITE, FB_BLACK);
@@ -76,13 +78,20 @@ int main()
 
 #ifdef TEST_3
     init_serial_com1();
-    char serial_message[] = "Hello serial port!";
-    serial_write(SERIAL_COM1_BASE, serial_message, sizeof(serial_message));
+    char serial_message[] = "Hello serial port!\n";
+    serial_write(SERIAL_COM1_BASE, serial_message, sizeof(serial_message) - 1);
     serial_write(SERIAL_COM1_BASE, "\r\n", 2);
 
-    char os_serial_message[] = "my os!";
-    serial_write(SERIAL_COM1_BASE, os_serial_message, sizeof(os_serial_message));
+    char os_serial_message[7] = "my os!\n";
+    serial_write(SERIAL_COM1_BASE, os_serial_message, sizeof(os_serial_message) - 1);
 #endif /* TEST 3 */
+
+#ifdef TEST_4
+    fb_write("Before GDT install\n", 19, DEFAULT_FG_COLOR, DEFAULT_BG_COLOUR);
+    gdt_install();
+    fb_write("After GDT install\n", 18, DEFAULT_FG_COLOR, DEFAULT_BG_COLOUR);
+#endif /* TEST_4 */
+    while (1) { asm volatile ("hlt");}
 
     return 0;
 }

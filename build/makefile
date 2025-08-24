@@ -47,12 +47,14 @@ C_OBJS = \
 	kmain.$(obj) \
 	io_ops.$(obj) \
 	fb.$(obj) \
-	serial_port.$(obj)
+	serial_port.$(obj) \
+	gdt_c.$(obj)
 
 # Assembly objects
 S_OBJS = \
 	loader.$(obj) \
-	io.$(obj)
+	io.$(obj) \
+	gdt.$(obj)
 
 # All objects
 OBJECTS = $(C_OBJS) $(S_OBJS)
